@@ -5,11 +5,55 @@
 
 #include <vector>
 
+
 #include "B_M.hpp"
 #include "match.hpp"
 
 using namespace std;
 
+//s: string evaluada desde la mitad
+int longestPalindromeMiddle(string s, int left, int right){
+    //en caso de que no haya string
+    if(s.empty()){return 0;}
+    //checar si si es correcto acceder asi a un caracter
+    //si left y right son espejos, se seguira recorreindo hacia afuera del centro
+    while( (left >= 0) && (right < s.length()) && (s[left] == s[right])){
+        left--; 
+        right++;
+    }
+    //se regresara la longitud del palindromo y posicion inicial
+    
+    return right - left + 1;
+}
+
+//se le pasará cada linea y ¿¿¿numero de linea????
+void longestPalindrome(string s, int lineNumber){
+    int start = 0; 
+    int end = 0;
+    int len = 0;
+    for(int i=0; i < s.length(); i++){
+        
+        int impar[2] = {};
+        int par[2] = {};
+
+        int len1 = longestPalindromeMiddle(s,i,i);
+        int len2 = longestPalindromeMiddle(s,i,i+1);
+        
+        len = max(len1,len2);
+        if (len > end - start){
+            //esto debe de devovler un numero entero y no decimal, checar
+            //calcula la posicion 
+            start = i - ((len-1)/2);
+            //end = i + (len/2)
+        }
+
+    }
+   
+    cout << lineNumber <<" " << start << " " << len << endl;
+
+}
+//se podria regresar vector con linea, posicion inicial (left) y tamaño
+//o se puede hacer void y simplemente regresar esos 3 valores impresos
 int main()
 {
     vector<string> transmissions{"transmission1.txt","transmission2.txt"};
